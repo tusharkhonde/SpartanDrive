@@ -39,6 +39,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private static final int RC_PERM_GET_ACCOUNTS = 2;
 
     /* Keys for persisting instance variables in savedInstanceState */
+    //added picker for file adding
     private static final String KEY_IS_RESOLVING = "is_resolving";
     private static final String KEY_SHOULD_RESOLVE = "should_resolve";
 
