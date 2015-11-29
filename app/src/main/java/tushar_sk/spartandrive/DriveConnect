@@ -1,0 +1,111 @@
+package com.cmpe277.spartandrive;
+import com.google.api.services.drive.model.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+
+import android.accounts.AccountManager;
+import android.app.Activity;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
+
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.api.GoogleApiClient;
+
+import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+
+import com.google.api.client.http.FileContent;
+import com.google.api.client.http.HttpTransport;
+import com.google.api.client.json.JsonFactory;
+import com.google.api.client.json.gson.GsonFactory;
+import com.google.api.services.drive.model.Permission;
+
+import com.google.api.services.drive.Drive;
+
+public class DriveConnect extends Activity {
+    private static final String ACCOUNT_NAME = "accountName";
+    public static final String KEY = "AIzaSyBfzth9OnqNjTgNjf7UYYhYwWnhlub94Fw";
+    final HttpTransport httpTransport = AndroidHttp.newCompatibleTransport();
+    final JsonFactory jsonFactory = GsonFactory.getDefaultInstance();
+    GoogleAccountCredential credential;
+    String TAG="DriveConnect";
+    Drive service;
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.i(TAG, "Legal requirements if you use Google Drive in your app: "
+                        + GooglePlayServicesUtil.getOpenSourceSoftwareLicenseInfo(this)
+        );
+
+        buildCredential();
+        service = new Drive.Builder(AndroidHttp.newCompatibleTransport(), new GsonFactory(), credential).build();
+
+        Log.i("DriveConnect", service.properties().toString());
+        try {
+            Log.i("DriveConnect", "Listing service files");
+        }catch(Exception e){
+            Log.d("DriveConnect", "Could not initialize: "+e);
+            e.printStackTrace();
+
+        }
+        saveFileToDrive();
+    }
+    private void saveFileToDrive() {
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    String mediaStorageDir = Environment.getExternalStoragePublicDirectory(
+                            Environment.DIRECTORY_DOWNLOADS).getPath();
+                    Log.i("DriveConnect","media storage drive"+mediaStorageDir);
+                    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
+                   Uri fileUri = fileUri = Uri.fromFile(new java.io.File(mediaStorageDir + java.io.File.separator + "PyTutorial98.pdf"));
+                    java.io.File fileContent = new java.io.File(fileUri.getPath());
+                    FileContent mediaContent = new FileContent("application/pdf", fileContent);
+
+                    // File's metadata.
+                    File body = new File();
+                    body.setTitle(fileContent.getName());
+                    body.setMimeType("application/pdf");
+
+                    File file = service.files().insert(body, mediaContent).execute();
+                    Permission newP = new Permission();
+                    // to get form contextual action bar
+                    newP.setValue("@gmail.com");
+                    newP.setType("user");
+                    newP.setRole("reader");
+                    service.permissions().insert(file.getId(),newP).execute();
+
+                    if (file != null) {
+                                           }
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        t.start();
+    }
+
+    void buildCredential(){
+        List<String> driveScopes = Arrays.asList(new String[]{
+                "https://www.googleapis.com/auth/plus.login",
+                "https://www.googleapis.com/auth/drive"
+        });
+         credential = GoogleAccountCredential.usingOAuth2(this, driveScopes);
+        try{
+            Log.i("DriveConnect","name:"+AccountManager.KEY_ACCOUNT_NAME);
+        // set account name from sign in
+            credential.setSelectedAccountName("tlbharshu@gmail.com");
+        }catch(Exception e){
+            Log.d("DriveConnect", "Could not initialize: "+e);
+            e.printStackTrace();
+        }
+    }
+
+}
