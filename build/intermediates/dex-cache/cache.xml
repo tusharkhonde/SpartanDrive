@@ -1,2 +1,257 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" />
+<items version="2" >
+
+    <item
+        jar="/Users/TUSHAR_SK/.gradle/caches/modules-2/files-2.1/com.squareup.picasso/picasso/2.3.3/1262995965440e28ba5c4d480c9c9ab4ccce84cc/picasso-2.3.3.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="1262995965440e28ba5c4d480c9c9ab4ccce84cc">
+        <dex dex="/Users/TUSHAR_SK/Downloads/SpartanDrive/app/build/intermediates/pre-dexed/debug/picasso-2.3.3_5efb95aacc8606e41daf184eea9ec84cb2ecc99d.jar" />
+    </item>
+    <item
+        jar="/Users/TUSHAR_SK/Downloads/SpartanDrive/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-drive/8.1.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="3c729e6d76a36c5dc27e6a4c4009296f49eaa88a">
+        <dex dex="/Users/TUSHAR_SK/Downloads/SpartanDrive/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-drive-8.1.0_13c373e6bb66cfd445888e656e1bf8909254096f.jar" />
+    </item>
+    <item
+        jar="/Users/TUSHAR_SK/.gradle/caches/modules-2/files-2.1/com.google.api-client/google-api-client-android/1.20.0/5673179575c32b69a474334255c3044adf18d40/google-api-client-android-1.20.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="05673179575c32b69a474334255c3044adf18d40">
+        <dex dex="/Users/TUSHAR_SK/Downloads/SpartanDrive/app/build/intermediates/pre-dexed/debug/google-api-client-android-1.20.0_fd57683bc8188f11a5318ab779473d833eede9e3.jar" />
+    </item>
+    <item
+        jar="/Users/TUSHAR_SK/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/23.1.1/support-annotations-23.1.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="8d680ba5a623724d1fb0e81c36a790f023a6cede">
+        <dex dex="/Users/TUSHAR_SK/Downloads/SpartanDrive/app/build/intermediates/pre-dexed/debug/support-annotations-23.1.1_5544b15e476c35332b8dfa7846c4bb9ab9698e5d.jar" />
+    </item>
+    <item
+        jar="/Users/TUSHAR_SK/.gradle/caches/modules-2/files-2.1/com.google.api-client/google-api-client/1.20.0/d3e66209ae9e749b2d6833761e7885f60f285564/google-api-client-1.20.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="d3e66209ae9e749b2d6833761e7885f60f285564">
+        <dex dex="/Users/TUSHAR_SK/Downloads/SpartanDrive/app/build/intermediates/pre-dexed/debug/google-api-client-1.20.0_091cacb638adcb14679f609f974f505e87284809.jar" />
+    </item>
+    <item
+        jar="/Users/TUSHAR_SK/.gradle/caches/modules-2/files-2.1/com.mcxiaoke.volley/library/1.0.18/38da306aafee11459cd935a01d2c92a98dc670a4/library-1.0.18.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="38da306aafee11459cd935a01d2c92a98dc670a4">
+        <dex dex="/Users/TUSHAR_SK/Downloads/SpartanDrive/app/build/intermediates/pre-dexed/debug/library-1.0.18_6ef527feb772e6c20237715ca64cbd4d52d5b506.jar" />
+    </item>
+    <item
+        jar="/Users/TUSHAR_SK/.gradle/caches/modules-2/files-2.1/com.google.http-client/google-http-client/1.20.0/93d82db2bca534960253f43424b2ba9d7638b4d2/google-http-client-1.20.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="93d82db2bca534960253f43424b2ba9d7638b4d2">
+        <dex dex="/Users/TUSHAR_SK/Downloads/SpartanDrive/app/build/intermediates/pre-dexed/debug/google-http-client-1.20.0_fc2d83d2427ee03ab473bbe08b526c2981982e03.jar" />
+    </item>
+    <item
+        jar="/Users/TUSHAR_SK/.gradle/caches/modules-2/files-2.1/com.google.apis/google-api-services-drive/v2-rev170-1.20.0/cac1b8bf96295246293ff03bd7c5daaa6f0adb47/google-api-services-drive-v2-rev170-1.20.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="cac1b8bf96295246293ff03bd7c5daaa6f0adb47">
+        <dex dex="/Users/TUSHAR_SK/Downloads/SpartanDrive/app/build/intermediates/pre-dexed/debug/google-api-services-drive-v2-rev170-1.20.0_9625bb8f0c415f3870a01a67417f3872367c5859.jar" />
+    </item>
+    <item
+        jar="/Users/TUSHAR_SK/Downloads/SpartanDrive/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="6cbc7773921fcfedbe55657578f0cbfe614778dc">
+        <dex dex="/Users/TUSHAR_SK/Downloads/SpartanDrive/app/build/intermediates/pre-dexed/debug/com.android.support-support-v4-23.1.1_b3e0f0c5e5ae9ce9a08cb1d0bd3f77953e468ea9.jar" />
+    </item>
+    <item
+        jar="/Users/TUSHAR_SK/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.3/5fc52c41ef0239d1093a1eb7c3697036183677ce/gson-2.3.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="5fc52c41ef0239d1093a1eb7c3697036183677ce">
+        <dex dex="/Users/TUSHAR_SK/Downloads/SpartanDrive/app/build/intermediates/pre-dexed/debug/gson-2.3_6371ca666b11b5e1c3d3e2d2719ab1202743e429.jar" />
+    </item>
+    <item
+        jar="/Users/TUSHAR_SK/Downloads/SpartanDrive/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/8.1.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="82825756edeeb3b56b15e73b2edd56e93da5a444">
+        <dex dex="/Users/TUSHAR_SK/Downloads/SpartanDrive/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-base-8.1.0_fc6fe7d0e3648f69f0dad64b9257d8e6b5952644.jar" />
+    </item>
+    <item
+        jar="/Users/TUSHAR_SK/.gradle/caches/modules-2/files-2.1/com.google.guava/guava-jdk5/13.0/381ae6c8add7c98e9bcddb1e0b898400cd6fc3f7/guava-jdk5-13.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="381ae6c8add7c98e9bcddb1e0b898400cd6fc3f7">
+        <dex dex="/Users/TUSHAR_SK/Downloads/SpartanDrive/app/build/intermediates/pre-dexed/debug/guava-jdk5-13.0_a2491ab52532e16d05582bf94c042886e1dee2e5.jar" />
+    </item>
+    <item
+        jar="/Users/TUSHAR_SK/Downloads/SpartanDrive/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-measurement/8.1.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="482de223655d06253cc6a4955d653f8994169500">
+        <dex dex="/Users/TUSHAR_SK/Downloads/SpartanDrive/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-measurement-8.1.0_56496e01ff7b2661beacd070721833787e3f1afd.jar" />
+    </item>
+    <item
+        jar="/Users/TUSHAR_SK/Downloads/SpartanDrive/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-plus/8.1.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="d61920aba361832a9545a43fa8c9453eb02f18f7">
+        <dex dex="/Users/TUSHAR_SK/Downloads/SpartanDrive/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-plus-8.1.0_877ed442769d8947b3e7287924a0f102f23ebf45.jar" />
+    </item>
+    <item
+        jar="/Users/TUSHAR_SK/.gradle/caches/modules-2/files-2.1/org.mortbay.jetty/jetty-util/6.1.26/e5642fe0399814e1687d55a3862aa5a3417226a9/jetty-util-6.1.26.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="e5642fe0399814e1687d55a3862aa5a3417226a9">
+        <dex dex="/Users/TUSHAR_SK/Downloads/SpartanDrive/app/build/intermediates/pre-dexed/debug/jetty-util-6.1.26_6f3b8246d1e875d52737fa5ff708fbc5f742a3e9.jar" />
+    </item>
+    <item
+        jar="/Users/TUSHAR_SK/.gradle/caches/modules-2/files-2.1/com.google.http-client/google-http-client-gson/1.20.0/9204765f39000f6109c927ac66c7963bf9c7df19/google-http-client-gson-1.20.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="9204765f39000f6109c927ac66c7963bf9c7df19">
+        <dex dex="/Users/TUSHAR_SK/Downloads/SpartanDrive/app/build/intermediates/pre-dexed/debug/google-http-client-gson-1.20.0_ad324e84ceccbf06edcdf1cee2d7c37fc3afbe2e.jar" />
+    </item>
+    <item
+        jar="/Users/TUSHAR_SK/.gradle/caches/modules-2/files-2.1/com.google.oauth-client/google-oauth-client-jetty/1.11.0-beta/7264fbc551ad8219b014feb662b1f1d187c2e7b7/google-oauth-client-jetty-1.11.0-beta.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="7264fbc551ad8219b014feb662b1f1d187c2e7b7">
+        <dex dex="/Users/TUSHAR_SK/Downloads/SpartanDrive/app/build/intermediates/pre-dexed/debug/google-oauth-client-jetty-1.11.0-beta_4e01a5a883579bec1df686a261ed4999e3b100bd.jar" />
+    </item>
+    <item
+        jar="/Users/TUSHAR_SK/Downloads/SpartanDrive/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="5c5699834e9722f1c288fea2de82725d078ba127">
+        <dex dex="/Users/TUSHAR_SK/Downloads/SpartanDrive/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-23.1.1_d66251e6d764934699380795fd42914f86df1b16.jar" />
+    </item>
+    <item
+        jar="/Users/TUSHAR_SK/Downloads/SpartanDrive/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-analytics/8.1.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="95758a2905669affbffc5ddd262921d375674fad">
+        <dex dex="/Users/TUSHAR_SK/Downloads/SpartanDrive/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-analytics-8.1.0_dbdc94a305b2b2f5663d9d2bb2d7758c718114a6.jar" />
+    </item>
+    <item
+        jar="/Users/TUSHAR_SK/Downloads/SpartanDrive/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appindexing/8.1.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="4477ea44f5ec5ad064022a22691732d7638ff197">
+        <dex dex="/Users/TUSHAR_SK/Downloads/SpartanDrive/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-appindexing-8.1.0_bb9775375ae0964e7151fbc62c2fbd5cbb572ec2.jar" />
+    </item>
+    <item
+        jar="/Users/TUSHAR_SK/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-core/2.1.3/f6c3aed1cdfa21b5c1737c915186ea93a95a58bd/jackson-core-2.1.3.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="f6c3aed1cdfa21b5c1737c915186ea93a95a58bd">
+        <dex dex="/Users/TUSHAR_SK/Downloads/SpartanDrive/app/build/intermediates/pre-dexed/debug/jackson-core-2.1.3_42f42c3c2bd46cec7428d7c6385bcff9fa49d455.jar" />
+    </item>
+    <item
+        jar="/Users/TUSHAR_SK/Downloads/SpartanDrive/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.1.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="d0dda274b703dd9c5bb056867649d22b4171ae7d">
+        <dex dex="/Users/TUSHAR_SK/Downloads/SpartanDrive/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-basement-8.1.0_f0c5e47f3072031eb6a1b9142b66c0a9f9ee2e93.jar" />
+    </item>
+    <item
+        jar="/Users/TUSHAR_SK/.gradle/caches/modules-2/files-2.1/com.google.http-client/google-http-client-jackson2/1.20.0/2408070b2abec043624d35b35e30450f1b663858/google-http-client-jackson2-1.20.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="2408070b2abec043624d35b35e30450f1b663858">
+        <dex dex="/Users/TUSHAR_SK/Downloads/SpartanDrive/app/build/intermediates/pre-dexed/debug/google-http-client-jackson2-1.20.0_4b10adfbb2dfe6cbaadf5e7bbae616163ff6103b.jar" />
+    </item>
+    <item
+        jar="/Users/TUSHAR_SK/.gradle/caches/modules-2/files-2.1/com.google.api-client/google-api-client-gson/1.20.0/ace1924800ca8c256f6a3f63e72ee13e1b458d36/google-api-client-gson-1.20.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="ace1924800ca8c256f6a3f63e72ee13e1b458d36">
+        <dex dex="/Users/TUSHAR_SK/Downloads/SpartanDrive/app/build/intermediates/pre-dexed/debug/google-api-client-gson-1.20.0_9bc3f40a451afe2f15804f30fa4b121026541de1.jar" />
+    </item>
+    <item
+        jar="/Users/TUSHAR_SK/Downloads/SpartanDrive/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/8.1.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="997773777cf3904c11d6764fe3b7668538220e49">
+        <dex dex="/Users/TUSHAR_SK/Downloads/SpartanDrive/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-ads-8.1.0_cbbcc544cfd3f44aa31469b84f47e0f20f0f448f.jar" />
+    </item>
+    <item
+        jar="/Users/TUSHAR_SK/Downloads/SpartanDrive/app/build/intermediates/exploded-aar/com.android.support/design/23.0.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="e5c61a3169221a89654ffcaaed47bba51cf071ad">
+        <dex dex="/Users/TUSHAR_SK/Downloads/SpartanDrive/app/build/intermediates/pre-dexed/debug/com.android.support-design-23.0.1_235580eebff8812e2ccd9222429dfdb009fec7b5.jar" />
+    </item>
+    <item
+        jar="/Users/TUSHAR_SK/Downloads/SpartanDrive/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-identity/8.1.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="d294caf562c4c678b2ef351662a0ca6f1a4d06c0">
+        <dex dex="/Users/TUSHAR_SK/Downloads/SpartanDrive/app/build/intermediates/pre-dexed/debug/com.google.android.gms-play-services-identity-8.1.0_a0f817cf0de2cfa9391d8f26b0ba58dc3bc05e3a.jar" />
+    </item>
+    <item
+        jar="/Users/TUSHAR_SK/.gradle/caches/modules-2/files-2.1/com.google.code.findbugs/jsr305/1.3.9/40719ea6961c0cb6afaeb6a921eaa1f6afd4cfdf/jsr305-1.3.9.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="40719ea6961c0cb6afaeb6a921eaa1f6afd4cfdf">
+        <dex dex="/Users/TUSHAR_SK/Downloads/SpartanDrive/app/build/intermediates/pre-dexed/debug/jsr305-1.3.9_cb12d1b33374d49a5a08935498b78d74670f987a.jar" />
+    </item>
+    <item
+        jar="/Users/TUSHAR_SK/Downloads/SpartanDrive/app/build/intermediates/exploded-aar/com.android.support/support-v13/23.0.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="8c046c952177602c858ed41c8fc492c939bde9aa">
+        <dex dex="/Users/TUSHAR_SK/Downloads/SpartanDrive/app/build/intermediates/pre-dexed/debug/com.android.support-support-v13-23.0.1_d81f8edb2d67deac144c2d296ea055f5e036a3c6.jar" />
+    </item>
+    <item
+        jar="/Users/TUSHAR_SK/.gradle/caches/modules-2/files-2.1/com.google.oauth-client/google-oauth-client/1.20.0/1d086ac5756475ddf451af2e2df6e288d18608ca/google-oauth-client-1.20.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="1d086ac5756475ddf451af2e2df6e288d18608ca">
+        <dex dex="/Users/TUSHAR_SK/Downloads/SpartanDrive/app/build/intermediates/pre-dexed/debug/google-oauth-client-1.20.0_6e3cf3af5840baf8daaf3780bf33858463f11661.jar" />
+    </item>
+    <item
+        jar="/Users/TUSHAR_SK/.gradle/caches/modules-2/files-2.1/com.google.oauth-client/google-oauth-client-java6/1.11.0-beta/c07d4fd295d5ddf9e92c23c88f854fb733770d4a/google-oauth-client-java6-1.11.0-beta.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="c07d4fd295d5ddf9e92c23c88f854fb733770d4a">
+        <dex dex="/Users/TUSHAR_SK/Downloads/SpartanDrive/app/build/intermediates/pre-dexed/debug/google-oauth-client-java6-1.11.0-beta_96db458ddc209e889e6171e6f510d1fb6417d7a9.jar" />
+    </item>
+    <item
+        jar="/Users/TUSHAR_SK/Downloads/SpartanDrive/app/build/intermediates/exploded-aar/com.android.support/support-v13/23.0.1/jars/libs/internal_impl-23.0.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="a0c456a59e1edab84702b48a626705aa1d830ccc">
+        <dex dex="/Users/TUSHAR_SK/Downloads/SpartanDrive/app/build/intermediates/pre-dexed/debug/internal_impl-23.0.1_d5d28b840a9abce5ff2901861dca5a55d47d5620.jar" />
+    </item>
+    <item
+        jar="/Users/TUSHAR_SK/.gradle/caches/modules-2/files-2.1/com.google.http-client/google-http-client-android/1.20.0/313dc99a7963523871495897ca11aa8472b3c6fd/google-http-client-android-1.20.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="313dc99a7963523871495897ca11aa8472b3c6fd">
+        <dex dex="/Users/TUSHAR_SK/Downloads/SpartanDrive/app/build/intermediates/pre-dexed/debug/google-http-client-android-1.20.0_de3f8b4ae8b5a3c411d7d630ccb23a7eb881b383.jar" />
+    </item>
+    <item
+        jar="/Users/TUSHAR_SK/Downloads/SpartanDrive/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/jars/libs/internal_impl-23.1.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="a4de9c81ae239414e1ed0f86441b02abaf29bca9">
+        <dex dex="/Users/TUSHAR_SK/Downloads/SpartanDrive/app/build/intermediates/pre-dexed/debug/internal_impl-23.1.1_015d7667f52c8ed9363602a6519622cb2dd5be47.jar" />
+    </item>
+    <item
+        jar="/Users/TUSHAR_SK/.gradle/caches/modules-2/files-2.1/org.mortbay.jetty/jetty/6.1.26/2f546e289fddd5b1fab1d4199fbb6e9ef43ee4b0/jetty-6.1.26.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="2f546e289fddd5b1fab1d4199fbb6e9ef43ee4b0">
+        <dex dex="/Users/TUSHAR_SK/Downloads/SpartanDrive/app/build/intermediates/pre-dexed/debug/jetty-6.1.26_d718d4e7b7bc84ac18bb901a344dfb5507377e70.jar" />
+    </item>
+    <item
+        jar="/Users/TUSHAR_SK/.gradle/caches/modules-2/files-2.1/org.mortbay.jetty/servlet-api/2.5-20081211/22bff70037e1e6fa7e6413149489552ee2064702/servlet-api-2.5-20081211.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="22bff70037e1e6fa7e6413149489552ee2064702">
+        <dex dex="/Users/TUSHAR_SK/Downloads/SpartanDrive/app/build/intermediates/pre-dexed/debug/servlet-api-2.5-20081211_58904b48f29effec8a94bef246ebe55b5ff175d9.jar" />
+    </item>
+
+</items>

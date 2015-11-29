@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:compat="http://schemas.android.com/apk/res-auto"
+    tools:context=".FolderActivity">
+    <!-- Search / will display always -->
+    <item android:id="@+id/search"
+        android:title="@string/action_search"
+        android:icon="@drawable/ic_action_search"
+        compat:showAsAction="always"
+        compat:actionViewClass="android.support.v7.widget.SearchView" />
+
+    <!-- Location Found -->
+    <item android:id="@+id/Add_Folder"
+        android:icon="@drawable/ic_action_add_folder"
+        android:title="@string/ic_action_add_folder"
+        app:showAsAction="ifRoom" />
+
+    <!-- Refresh -->
+    <item android:id="@+id/attach_file"
+        android:icon="@drawable/ic_action_attach_file"
+        android:title="@string/ic_action_attach_file"
+        app:showAsAction="ifRoom" />
+</menu>

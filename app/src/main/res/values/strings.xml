@@ -1,3 +1,24 @@
 <resources>
     <string name="app_name">SpartanDrive</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string-array name="titles_array">
+        <item>List non-text files</item>
+        <item>List files shared with me</item>
+        <item>List text files</item>
+        <item>List files contains \"a\" in title</item>
+        <item>List starred text files</item>
+        <item>List text or html files</item>
+    </string-array>
+
+    <string name="action_settings">Settings</string>
+    <string name="action_search">Search</string>
+    <string name="ic_action_add_folder">Add folder</string>
+    <string name="ic_action_attach_file">Upload File</string>
+    <string name="signed_in_fmt">signed_in</string>
+    <string name="loading">loading</string>
+    <string name="title_text">title_text</string>
+    <string name="signed_out">signed_out</string>
+    <string name="sign_out">sign_out</string>
+    <string name="disconnect">disconnect</string>
+
 </resources>
