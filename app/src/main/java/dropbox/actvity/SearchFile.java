@@ -2,13 +2,9 @@ package dropbox.actvity;
 
 import android.os.AsyncTask;
 import android.util.Log;
-
-import org.apache.http.entity.mime.HttpMultipartMode;
-import org.apache.http.entity.mime.MultipartEntity;
-import org.apache.http.entity.mime.content.FileBody;
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.OutputStream;
+import java.io.DataOutputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
 import javax.net.ssl.HttpsURLConnection;
 import Utility.JsonHeader;
@@ -16,7 +12,8 @@ import Utility.JsonHeader;
 /**
  * Created by TUSHAR_SK on 12/1/15.
  */
-public class UploadFile extends AsyncTask<String, Void, String> {
+
+public class SearchFile extends AsyncTask<String, Void, String>{
 
 
     StringBuilder response = null;
@@ -24,14 +21,15 @@ public class UploadFile extends AsyncTask<String, Void, String> {
     BufferedReader in = null;
     HttpsURLConnection con = null;
     int responseCode = -1;
+    DataOutputStream wr = null;
 
-    @Override
-    protected String doInBackground(String... params) {
+
+    public String doInBackground(String... params){
 
         String url = params[0];
         String accessToken = params[1];
-        String sourceFilePath = params[2];
-        String destFileName = params[3];
+        String query = params[2];
+        String reqBody = new JsonHeader().getSearchHeader(query);
 
         try {
             response = new StringBuilder();
@@ -45,28 +43,34 @@ public class UploadFile extends AsyncTask<String, Void, String> {
             con.setDoOutput(true);
 
             con.setRequestProperty("Authorization", accessToken);
-            con.setRequestProperty("Content-Type", "application/octet-stream");
-            con.setRequestProperty("Dropbox-API-Arg", new JsonHeader().getUploadHeader(destFileName));
+            con.setRequestProperty("Content-Type", "application/json");
 
-            FileBody fileBody = new FileBody(new File(sourceFilePath));
-            MultipartEntity multipartEntity = new MultipartEntity(HttpMultipartMode.STRICT);
-            multipartEntity.addPart("file", fileBody);
+            wr = new DataOutputStream(con.getOutputStream());
+            wr.writeBytes(reqBody);
 
-            OutputStream out = con.getOutputStream();
-            multipartEntity.writeTo(out);
+            in = new BufferedReader(
+                    new InputStreamReader(con.getInputStream()));
             responseCode = con.getResponseCode();
 
 
-        } catch (Exception e) {
+
+            String inputLine;
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+
+            System.out.println(response);
+        }
+        catch (Exception e) {
             return String.valueOf(responseCode);
-         }
+        }
         return String.valueOf(responseCode);
     }
 
     @Override
     protected void onPostExecute(String data) {
 
-        Log.v("Response Code",data);
+        Log.v("Response Code", data);
     }
-
 }
+

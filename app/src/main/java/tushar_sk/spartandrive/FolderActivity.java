@@ -4,14 +4,12 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v7.widget.SearchView;
 import android.widget.Toast;
-
 import Utility.Constants;
 import dropbox.actvity.*;
 
@@ -26,9 +24,6 @@ public class FolderActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //Path to file
-        new UploadFile().execute(Constants.fileUplaodUrl, Constants.accessToken, "", "Map2.png");
         handleIntent(getIntent());
     }
 
@@ -59,7 +54,7 @@ public class FolderActivity extends AppCompatActivity{
                 // perform query here
                 query = q;
                 Log.v("msg:", query);
-
+                new SearchFile().execute(Constants.searchFilesUrl, Constants.accessToken, query);
                 Intent i = new Intent(getApplicationContext(), FolderActivity.class);
                 i.putExtra("query", query);
                 startActivity(i);
