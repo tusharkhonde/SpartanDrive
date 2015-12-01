@@ -12,6 +12,8 @@ public class ApplicationSettings {
 
     private String accessToken;
 
+    private String email;
+
     private GoogleApiClient googleApiClient;
 
     private ApplicationSettings() {
@@ -48,6 +50,12 @@ public class ApplicationSettings {
         this.accessToken = accessToken;
     }
 
+    public String getEmail() {
+        return email;
+    }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }
 

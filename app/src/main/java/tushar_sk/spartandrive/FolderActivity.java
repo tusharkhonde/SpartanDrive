@@ -4,86 +4,35 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ListView;
 import android.support.v7.widget.SearchView;
 import android.widget.Toast;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.drive.Drive;
-import com.google.android.gms.drive.DriveApi;
-import com.google.android.gms.drive.DriveFolder;
-import com.google.android.gms.drive.DriveId;
-import Utility.ApplicationSettings;
-import Utility.ResultsAdapter;
+
+import Utility.Constants;
+import dropbox.actvity.*;
 
 
 /**
  * Created by TUSHAR_SK on 11/23/15.
  */
-public class FolderActivity extends LoginActivity{
-
-    private ListView mResultsListView;
-    private ResultsAdapter mResultsAdapter;
-
-    public static final String EXISTING_FOLDER_ID = "0B5hCCNNMk-vJT0w1cTZEYWprVkU";
+public class FolderActivity extends AppCompatActivity{
 
     public static String query = "";
-
-    public void showMessage(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Drive.DriveApi.fetchDriveId(ApplicationSettings.getSharedSettings().getGoogleApiClient(), EXISTING_FOLDER_ID)
-                .setResultCallback(idCallback);
-
-        setContentView(R.layout.folder_activity);
-        mResultsListView = (ListView) findViewById(R.id.listViewResults);
-        mResultsAdapter = new ResultsAdapter(this);
-        mResultsListView.setAdapter(mResultsAdapter);
-
+        //Path to file
+        new UploadFile().execute(Constants.fileUplaodUrl, Constants.accessToken, "", "Map2.png");
         handleIntent(getIntent());
     }
 
-    @Override
-    public void onConnected(Bundle connectionHint) {
-        super.onConnected(connectionHint);
-        Drive.DriveApi.fetchDriveId(ApplicationSettings.getSharedSettings().getGoogleApiClient(), EXISTING_FOLDER_ID)
-                .setResultCallback(idCallback);
-    }
 
-    final private ResultCallback<DriveApi.DriveIdResult> idCallback = new ResultCallback<DriveApi.DriveIdResult>() {
-        @Override
-        public void onResult(DriveApi.DriveIdResult result) {
-            if (!result.getStatus().isSuccess()) {
-                showMessage("Cannot find DriveId. Are you authorized to view this file?");
-                return;
-            }
-            DriveId driveId = result.getDriveId();
-            DriveFolder folder = driveId.asDriveFolder();
-            folder.listChildren(ApplicationSettings.getSharedSettings().getGoogleApiClient())
-                    .setResultCallback(metadataResult);
-        }
-    };
-
-    final private ResultCallback<DriveApi.MetadataBufferResult> metadataResult = new
-            ResultCallback<DriveApi.MetadataBufferResult>() {
-                @Override
-                public void onResult(DriveApi.MetadataBufferResult result) {
-                    if (!result.getStatus().isSuccess()) {
-                        showMessage("Problem while retrieving files");
-                        return;
-                    }
-                    mResultsAdapter.clear();
-                    mResultsAdapter.append(result.getMetadataBuffer());
-                    showMessage("Successfully listed files.");
-                }
-            };
 
     @Override
     protected void onNewIntent(Intent intent) {

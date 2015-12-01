@@ -1,6 +1,8 @@
 package tushar_sk.spartandrive;
 
+
 import android.accounts.AccountManager;
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,26 +11,32 @@ import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.auth.UserRecoverableAuthException;
 import com.google.android.gms.common.AccountPicker;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Scope;
+import com.google.android.gms.drive.Drive;
+import com.google.android.gms.drive.DriveFolder;
+import com.google.android.gms.drive.MetadataChangeSet;
 import com.google.android.gms.plus.Plus;
+
+import Utility.AccessTokenUtil;
+import Utility.ApplicationSettings;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        View.OnClickListener{
+        View.OnClickListener, AccessTokenUtil.GoogleConnectionUtilProtocol{
 
     private static final String TAG = "LoginActivity";
 
@@ -39,7 +47,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private static final int RC_PERM_GET_ACCOUNTS = 2;
 
     /* Keys for persisting instance variables in savedInstanceState */
-    //added picker for file adding
     private static final String KEY_IS_RESOLVING = "is_resolving";
     private static final String KEY_SHOULD_RESOLVE = "should_resolve";
 
@@ -54,6 +61,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private boolean mShouldResolve = false;
     // [END resolution_variables]
 
+    static final int REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR = 1001;
+    static final int REQUEST_CODE_PICK_ACCOUNT = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,11 +89,19 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApi(Plus.API)
+                .addApi(Drive.API)
+                .addScope(Drive.SCOPE_FILE)
+                .addScope(Drive.SCOPE_APPFOLDER)
+                .addScope(Plus.SCOPE_PLUS_LOGIN)
                 .addScope(new Scope(Scopes.PROFILE))
                 .addScope(new Scope(Scopes.EMAIL))
                 .build();
         // [END create_google_api_client]
+    }
 
+
+    public void showMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
     // [START on_start_on_stop]
@@ -97,19 +114,23 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     protected void onStop() {
         super.onStop();
-        mGoogleApiClient.disconnect();
+//        mGoogleApiClient.disconnect();
     }
     // [END on_start_on_stop]
 
     @Override
     public void onConnected(Bundle bundle) {
+        mShouldResolve = false;
         mGoogleApiClient.connect();
+        Log.v("Connected","Connected to Google");
     }
+
+
 
     @Override
     public void onConnectionSuspended(int i) {
         Log.w(TAG, "onConnectionSuspended:" + i);
-        mGoogleApiClient.disconnect();
+//        mGoogleApiClient.disconnect();
     }
 
     @Override
@@ -148,11 +169,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         // User clicked the sign-in button, so begin the sign-in process and automatically
         // attempt to resolve any errors that occur.
         mShouldResolve = true;
-        mGoogleApiClient.connect();
+//        mGoogleApiClient.connect();
 
-        // Change Activity
-        Intent intent = new Intent(LoginActivity.this, FolderActivity.class);
-        startActivity(intent);
+//        // Change Activity
+//        Intent intent = new Intent(LoginActivity.this, FolderActivity.class);
+//        startActivity(intent);
+
+        pickUserAccount();
 
 
     }
@@ -187,17 +210,43 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         super.onActivityResult(requestCode, resultCode, data);
         Log.d(TAG, "onActivityResult:" + requestCode + ":" + resultCode + ":" + data);
 
+
+        if (requestCode == REQUEST_CODE_PICK_ACCOUNT) {
+
+            if (resultCode == RESULT_OK) {
+
+                String mEmail = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
+                Log.v("email Result ok:",mEmail);
+                ApplicationSettings.getSharedSettings().setEmail(mEmail);
+                getUsername(mEmail);
+            } else if (resultCode == RESULT_CANCELED) {
+
+                Toast.makeText(this, "Select an account to proceed", Toast.LENGTH_SHORT).show();
+            }
+        } else if (requestCode == REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR
+                && resultCode == RESULT_OK) {
+
+            String mEmail = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
+            Log.v("email Result ok &&:",mEmail);
+            ApplicationSettings.getSharedSettings().setEmail(mEmail);
+            getUsername(mEmail);
+        }
+
         if (requestCode == RC_SIGN_IN) {
             // If the error resolution was not successful we should not resolve further.
             if (resultCode != RESULT_OK) {
                 mShouldResolve = false;
             }
 
+            String mEmail = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
+            Log.v("email Rc sign in:",mEmail);
+            getUsername(mEmail);
+
             mIsResolving = false;
-            mGoogleApiClient.connect();
+//            mGoogleApiClient.connect();
         }
+
     }
-    // [END on_activity_result]
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
@@ -222,4 +271,82 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         outState.putBoolean(KEY_IS_RESOLVING, mIsResolving);
         outState.putBoolean(KEY_SHOULD_RESOLVE, mShouldResolve);
     }
+
+    private void getUsername(String mEmail) {
+
+        if (mEmail == null) {
+
+            pickUserAccount();
+        } else {
+
+            if (isDeviceOnline()) {
+
+                Log.v("email:",mEmail);
+                new AccessTokenUtil(this, mEmail).execute();
+            } else {
+
+                Toast.makeText(this, "No internet connection", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+    public boolean isDeviceOnline() {
+
+        ConnectivityManager connMgr = (ConnectivityManager)
+                getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+
+        if (networkInfo != null && networkInfo.isConnected()) {
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private void pickUserAccount() {
+        String[] accountTypes = new String[]{"com.google"};
+
+        Intent intent = AccountPicker.newChooseAccountIntent(null, null,
+                accountTypes, false, null, null, null, null);
+        startActivityForResult(intent, REQUEST_CODE_PICK_ACCOUNT);
+    }
+
+
+
+    @Override
+    public void didGenerateAccessToken(String accessToken) {
+        ApplicationSettings.getSharedSettings().setAccessToken(accessToken);
+        ApplicationSettings.getSharedSettings().setGoogleApiClient(mGoogleApiClient);
+        ApplicationSettings.getSharedSettings().setEmail(AccountManager.KEY_ACCOUNT_NAME);
+        Intent intent = new Intent(this, FolderActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void didCatchException(final Exception e) {
+        runOnUiThread(new Runnable() {
+
+            @Override
+            public void run() {
+
+                if (e instanceof UserRecoverableAuthException) {
+
+                    Intent intent = ((UserRecoverableAuthException) e).getIntent();
+                    startActivityForResult(intent,
+                            REQUEST_CODE_RECOVER_FROM_PLAY_SERVICES_ERROR);
+                }
+            }
+        });
+    }
+
+    @Override
+    public Activity getActivity() {
+        return this;
+    }
+
+    public GoogleApiClient getmGoogleApiClient(){
+        return mGoogleApiClient;
+    }
+
+
 }
