@@ -1,16 +1,19 @@
 package Utility;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
-import java.util.List;
 import tushar_sk.spartandrive.R;
 
+import java.util.List;
+
 /**
- * Created by TUSHAR_SK on 11/28/15.
+ * Created by Manpreet Gandhi on 11/24/2015.
  */
 public class FileArrayAdapter extends ArrayAdapter<Option> {
 
@@ -42,10 +45,18 @@ public class FileArrayAdapter extends ArrayAdapter<Option> {
         if (o != null) {
             TextView t1 = (TextView) v.findViewById(R.id.TextView01);
             TextView t2 = (TextView) v.findViewById(R.id.TextView02);
+            TextView t3 = (TextView) v.findViewById(R.id.TextViewDate);
+            ImageView imageCity = (ImageView) v.findViewById(R.id.fd_Icon1);
+            String uri = "drawable/" + o.getImage();
+            int imageResource = c.getResources().getIdentifier(uri, null, c.getPackageName());
+            Drawable image = c.getResources().getDrawable(imageResource);
+            imageCity.setImageDrawable(image);
             if(t1!=null)
                 t1.setText(o.getName());
             if(t2!=null)
                 t2.setText(o.getData());
+            if(t3!=null)
+                t3.setText(o.getDate());
         }
         return v;
     }

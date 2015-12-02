@@ -29,4 +29,14 @@ public class JsonHeader {
         return jsonObject.toString();
     }
 
+    public String getListHeader(String folder){
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("path", folder);
+        jsonObject.addProperty("recursive",false);
+        jsonObject.addProperty("include_media_info", false);
+        jsonObject.addProperty("include_deleted", false);
+
+        return jsonObject.toString();
+    }
+
 }

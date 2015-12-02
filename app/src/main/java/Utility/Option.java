@@ -6,14 +6,18 @@ package Utility;
 public class Option implements Comparable<Option>{
 
     private String name;
+    private String date;
     private String data;
     private String path;
+    private String image;
 
-    public Option(String n,String d,String p)
+    public Option(String n,String d,String dt, String p, String img)
     {
         name = n;
         data = d;
         path = p;
+        date =dt;
+        image =img;
     }
 
     public String getName()
@@ -30,6 +34,17 @@ public class Option implements Comparable<Option>{
     {
         return path;
     }
+
+    public String getDate()
+    {
+        return date;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+
 
     @Override
     public int compareTo(Option o) {

@@ -24,6 +24,7 @@ public class FolderActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        new ListFiles().execute(Constants.listFilesFoldersurl,Constants.accessToken,"/Home/Folder");
         handleIntent(getIntent());
     }
 
