@@ -2,24 +2,17 @@ package dropbox.actvity;
 
 import android.os.AsyncTask;
 import android.util.Log;
-
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
-
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.net.ssl.HttpsURLConnection;
-
-import Utility.ApplicationSettings;
 import Utility.AsyncInterface;
-import Utility.Constants;
 import Utility.JsonHeader;
 
 /**

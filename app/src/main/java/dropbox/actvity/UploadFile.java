@@ -32,6 +32,7 @@ public class UploadFile extends AsyncTask<String, Void, String> {
         String accessToken = params[1];
         String sourceFilePath = params[2];
         String destFileName = params[3];
+        String destFolderPath = params[4];
 
         try {
             response = new StringBuilder();
@@ -46,7 +47,7 @@ public class UploadFile extends AsyncTask<String, Void, String> {
 
             con.setRequestProperty("Authorization", accessToken);
             con.setRequestProperty("Content-Type", "application/octet-stream");
-            con.setRequestProperty("Dropbox-API-Arg", new JsonHeader().getUploadHeader(destFileName));
+            con.setRequestProperty("Dropbox-API-Arg", new JsonHeader().getUploadHeader(destFolderPath,destFileName));
 
             FileBody fileBody = new FileBody(new File(sourceFilePath));
             MultipartEntity multipartEntity = new MultipartEntity(HttpMultipartMode.STRICT);

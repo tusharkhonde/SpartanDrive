@@ -1,17 +1,11 @@
 package tushar_sk.spartandrive;
 
-
-
 import android.app.ListActivity;
-import android.content.ActivityNotFoundException;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import java.io.File;
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -20,6 +14,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Stack;
 
+import Utility.ApplicationSettings;
 import Utility.Constants;
 import Utility.FileArrayAdapter;
 import Utility.Option;
@@ -127,25 +122,17 @@ public class UploadActivity extends ListActivity{
     }
 
 
-    //manpreet
+
     //To DO upload the file clicked
     private void onFileClick(Option o)
     {
 
         Toast.makeText(this, "File Clicked: " + currentDir+"/"+o.getName(), Toast.LENGTH_SHORT).show();
         String FilePath = currentDir+"/"+o.getName();
-        new UploadFile().execute(Constants.fileUplaodUrl, Constants.accessToken, FilePath, o.getName().toString());
+        new UploadFile().execute(Constants.fileUplaodUrl, Constants.accessToken, FilePath, o.getName(), ApplicationSettings.getSharedSettings().getPath());
         Log.v("path of the file", currentDir.toString());
-        Log.v("File clicked",o.getName().toString());
-        Intent intent = new Intent(this, FolderActivity.class);
-        try {
-            startActivity(intent);
-        }
-        catch (ActivityNotFoundException e) {
-            Toast.makeText(this,
-                    "No Application Available to View PDF",
-                    Toast.LENGTH_SHORT).show();
-        }
+        Log.v("File clicked",o.getName());
+
     }
 
 

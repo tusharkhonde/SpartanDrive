@@ -8,9 +8,9 @@ import com.google.gson.JsonObject;
 public class JsonHeader {
 
 
-    public String getUploadHeader(String filename){
+    public String getUploadHeader(String path, String filename){
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("path", "/Home/Folder/"+ filename);
+        jsonObject.addProperty("path", path +"/"+ filename);
         jsonObject.addProperty("mode", "add");
         jsonObject.addProperty("autorename", true);
         jsonObject.addProperty("mute", false);
@@ -18,13 +18,15 @@ public class JsonHeader {
         return jsonObject.toString();
     }
 
-    public String getSearchHeader(String filename){
+    public String getSearchHeader(String path,String filename){
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("path", "");
-        jsonObject.addProperty("query",filename);
+        jsonObject.addProperty("path", "/"+filename);
+        jsonObject.addProperty("query",path);
         jsonObject.addProperty("start", 0);
         jsonObject.addProperty("max_results", 10);
         jsonObject.addProperty("mode", "filename");
+
+        System.out.println(jsonObject.toString());
 
         return jsonObject.toString();
     }

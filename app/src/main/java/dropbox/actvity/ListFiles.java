@@ -131,7 +131,7 @@ public class ListFiles extends AsyncTask<String, Void, List<String>> {
                     System.out.println(j2.get("size"));
                     System.out.println(j2.get("client_modified"));
                 }
-                list.add(0, map);
+                list.add(i, map);
             }
         }
             catch(JSONException e){

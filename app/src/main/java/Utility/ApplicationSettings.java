@@ -22,13 +22,33 @@ public class ApplicationSettings {
 
     private String noFolder = "FALSE";
 
+    private String searchMode = "FALSE";
+
     private ArrayList<FolderJSON> folderJSONs;
+
+    private ArrayList<FolderJSON> searchFolderJSONs;
 
     private GoogleApiClient googleApiClient;
 
     private ApplicationSettings() {
          accessToken = "";
 
+    }
+
+    public ArrayList<FolderJSON> getSearchFolderJSONs() {
+        return searchFolderJSONs;
+    }
+
+    public void setSearchFolderJSONs(ArrayList<FolderJSON> searchFolderJSONs) {
+        this.searchFolderJSONs = searchFolderJSONs;
+    }
+
+    public String getSearchMode() {
+        return searchMode;
+    }
+
+    public void setSearchMode(String searchMode) {
+        this.searchMode = searchMode;
     }
 
     public String getNoFolder() {
