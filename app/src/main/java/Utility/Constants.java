@@ -13,4 +13,7 @@ public class Constants {
     public static final String listFilesFoldersurl = "https://api.dropboxapi.com/2/files/list_folder";
 
     public static final String searchFilesUrl = "https://api.dropboxapi.com/2/files/search";
+
+    public static final String createFoldersUrl = "https://api.dropboxapi.com/2/files/create_folder";
+
 }

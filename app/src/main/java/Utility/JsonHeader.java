@@ -39,4 +39,10 @@ public class JsonHeader {
         return jsonObject.toString();
     }
 
+    public String getCreateFolderHeader(String folder){
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("path", folder);
+        return jsonObject.toString();
+    }
+
 }

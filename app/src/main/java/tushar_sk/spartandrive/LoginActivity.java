@@ -33,6 +33,7 @@ import com.google.android.gms.plus.Plus;
 
 import Utility.AccessTokenUtil;
 import Utility.ApplicationSettings;
+import Utility.Constants;
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
@@ -218,6 +219,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 String mEmail = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
                 Log.v("email Result ok:",mEmail);
                 ApplicationSettings.getSharedSettings().setEmail(mEmail);
+                Log.v("email get", ApplicationSettings.getSharedSettings().getEmail());
                 getUsername(mEmail);
             } else if (resultCode == RESULT_CANCELED) {
 
@@ -239,6 +241,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             }
 
             String mEmail = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
+            ApplicationSettings.getSharedSettings().setEmail(mEmail);
             Log.v("email Rc sign in:",mEmail);
             getUsername(mEmail);
 
@@ -281,8 +284,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
             if (isDeviceOnline()) {
 
-                Log.v("email:",mEmail);
+                Log.v("email:", mEmail);
                 new AccessTokenUtil(this, mEmail).execute();
+                ApplicationSettings.getSharedSettings().setEmail(mEmail);
+
             } else {
 
                 Toast.makeText(this, "No internet connection", Toast.LENGTH_LONG).show();
@@ -317,7 +322,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     public void didGenerateAccessToken(String accessToken) {
         ApplicationSettings.getSharedSettings().setAccessToken(accessToken);
         ApplicationSettings.getSharedSettings().setGoogleApiClient(mGoogleApiClient);
-        ApplicationSettings.getSharedSettings().setEmail(AccountManager.KEY_ACCOUNT_NAME);
+         Log.v("dgat",ApplicationSettings.getSharedSettings().getEmail());
         Intent intent = new Intent(this, FolderActivity.class);
         startActivity(intent);
     }

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView android:id="@+id/folder_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textSize="13sp"
+        android:textColor="#AF002A"
+        android:textStyle="bold" />
+
+
+    <TextView android:id="@+id/folder_path"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="18dp"
+        android:textColor="#AF002A"
+        android:textSize="12sp"
+        android:textStyle="bold"/>
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/checkbox_folder"
+        style="?android:attr/starStyle"
+        android:focusable="false"
+        android:textColor="#0048BA"
+        android:visibility="visible"/>
+
+</LinearLayout>
