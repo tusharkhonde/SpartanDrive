@@ -47,4 +47,25 @@ public class JsonHeader {
         return jsonObject.toString();
     }
 
+    public String shareFileFolder(String from, String to){
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("from_path", from);
+        jsonObject.addProperty("to_path",to);
+        return jsonObject.toString();
+    }
+
+    public String insertGcmUser(String email, String regId){
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("email_id", email);
+        jsonObject.addProperty("reg_id",regId);
+        return jsonObject.toString();
+    }
+
+    public String notifyGcmUser(String sender, String receiver){
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("s_email_id", sender);
+        jsonObject.addProperty("r_email_id",receiver);
+        return jsonObject.toString();
+    }
+
 }

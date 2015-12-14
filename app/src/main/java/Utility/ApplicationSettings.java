@@ -30,6 +30,16 @@ public class ApplicationSettings {
 
     private GoogleApiClient googleApiClient;
 
+    private String registration_id;
+
+    public String getRegistration_id() {
+        return registration_id;
+    }
+
+    public void setRegistration_id(String registration_id) {
+        this.registration_id = registration_id;
+    }
+
     private ApplicationSettings() {
          accessToken = "";
 

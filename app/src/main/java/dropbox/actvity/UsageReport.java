@@ -8,10 +8,9 @@ import tushar_sk.spartandrive.FolderActivity;
 import tushar_sk.spartandrive.R;
 
 /**
- * Created by nikhilakambham on 12/12/15.
+ * Created by TUSHAR_SK on 12/13/15.
  */
 public class UsageReport extends AppCompatActivity {
-
 
 
     @Override
@@ -21,26 +20,14 @@ public class UsageReport extends AppCompatActivity {
 
         FolderActivity c = new FolderActivity();
         int folder = c.getFolder();
-
-
-
         int file = c.getNoOfFiles();
-        int size = c.getsize();
 
-       String folders = String.valueOf(folder);
-       String files = String.valueOf(file);
+        String folders = String.valueOf(folder);
+        String files = String.valueOf(file);
         TextView f = (TextView) findViewById(R.id.noOfFiles);
-       f.setText(files);
+        f.setText(files);
 
         TextView f1 = (TextView) findViewById(R.id.noofFolders);
         f1.setText(folders);
-
-
-
-
     }
-
-
-
-
-    }
+}

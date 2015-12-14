@@ -19,12 +19,18 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import Utility.ApplicationSettings;
 import Utility.AsyncInterface;
 import Utility.Constants;
 import Utility.FolderAdapter;
 import Utility.FolderJSON;
+import Utility.LongClickHelper;
 import dropbox.actvity.*;
 
 
@@ -38,13 +44,11 @@ public class FolderActivity extends AppCompatActivity{
     public static ListView listView;
     public static String path;
     final Context context = this;
-    private EditText result;
-    public static int noOfFiles = 0;
     public static int noOfFolders = 0;
+    public static int noOfFiles = 0;
     public static double usage = 0.0;
     public static int size = 0;
     public String TAG = "FolderActivity";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +81,7 @@ public class FolderActivity extends AppCompatActivity{
                  } finally {
                      arrayList = folderJSONs;
                      Log.v("size array", String.valueOf(arrayList.size()));
-                     FolderAdapter itemsAdapter = new FolderAdapter(getAct().getApplicationContext(), R.layout.fragment_list, arrayList);
+                     FolderAdapter itemsAdapter = new FolderAdapter(getAct().getApplicationContext(), R.layout.frame_file, arrayList);
                      listView.setAdapter(itemsAdapter);
                  }
 
@@ -114,23 +118,29 @@ public class FolderActivity extends AppCompatActivity{
                      @Override
                      public void onItemClick(AdapterView<?> av, View v, int pos, long id) {
 
-                         Log.v("log path", arrayList.get(pos).getPath());
-                         Log.v("log type", arrayList.get(pos).getType());
-                         if (arrayList.get(pos).getType().equals("folder")) {
+                         try {
+                             if (arrayList.get(pos).getType().equals("folder")) {
 
-                             ApplicationSettings.getSharedSettings().setPath(arrayList.get(pos).getPath());
-                             ApplicationSettings.getSharedSettings().setFlag(true);
-                             Log.v("log folder", "folder");
-                             arrayList.removeAll(arrayList);
-                             Intent intent = new Intent(getAct(), FolderActivity.class);
-//                            intent.putExtra("video", arrayList.get(pos).getPath());
-                             startActivity(intent);
+                                 ApplicationSettings.getSharedSettings().setPath(arrayList.get(pos).getPath());
+                                 ApplicationSettings.getSharedSettings().setFlag(true);
+                                 Log.v("log folder", "folder");
+                                 arrayList.removeAll(arrayList);
+                                 Intent intent = new Intent(getAct(), FolderActivity.class);
+                                 startActivity(intent);
 
+                             }
+
+                         } catch (Exception e) {
+                             Log.v("Log", "Error");
                          }
 
                      }
 
                  });
+
+         LongClickHelper helper = new LongClickHelper(context);
+         listView.setOnItemLongClickListener(helper);
+
          Log.v("id", String.valueOf(R.id.listViewFolder));
      }
         else {
@@ -142,7 +152,6 @@ public class FolderActivity extends AppCompatActivity{
          ApplicationSettings.getSharedSettings().setPath("/"+ApplicationSettings.getSharedSettings().getEmail());
          ApplicationSettings.getSharedSettings().setSearchMode("FALSE");
      }
-
 
 
         handleIntent(getIntent());
@@ -198,7 +207,7 @@ public class FolderActivity extends AppCompatActivity{
                                 Toast.makeText(getApplicationContext(), "File not found", Toast.LENGTH_LONG).show();
                             }
                         });
-                Log.v("query",query);
+                Log.v("query", query);
                 searchFile.execute(Constants.searchFilesUrl, Constants.accessToken, ApplicationSettings.getSharedSettings().getEmail(), query);
 
 
@@ -215,6 +224,8 @@ public class FolderActivity extends AppCompatActivity{
 
     }
 
+    boolean doubleBackToExitPressedOnce = false;
+
     @Override
     public void onBackPressed() {
 
@@ -225,11 +236,35 @@ public class FolderActivity extends AppCompatActivity{
 
 
             if (charCount == 1) {
-                finish();
-            } else {
+
+                if (doubleBackToExitPressedOnce) {
+
+                    Intent intent = new Intent(this, LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.putExtra("Exit me", true);
+                    startActivity(intent);
+                    finish();
+
+                }
+
+                this.doubleBackToExitPressedOnce = true;
+                Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+                new Handler().postDelayed(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        doubleBackToExitPressedOnce=false;
+                    }
+                }, 2000);
+
+            }
+
+            else {
+
                 int i = path.lastIndexOf("/");
                 path = path.subSequence(0, i).toString();
-                Log.v("Back Presses", path);
+                Log.v("Back Pressed", path);
                 ApplicationSettings.getSharedSettings().setPath(path);
                 Intent intent = new Intent(this, FolderActivity.class);
                 startActivity(intent);
@@ -237,8 +272,9 @@ public class FolderActivity extends AppCompatActivity{
             }
         }
         catch (Exception e){
-           finish();
+                finish();
         }
+
     }
 
 
@@ -255,7 +291,6 @@ public class FolderActivity extends AppCompatActivity{
             startActivity(FileView);
             return true;
         }
-
 
         else if (id == R.id.usagereport){
 
@@ -299,7 +334,6 @@ public class FolderActivity extends AppCompatActivity{
 
 
                     }
-// handler to delay...
 
                     new Handler().postDelayed(new Runnable() {
 
@@ -307,7 +341,7 @@ public class FolderActivity extends AppCompatActivity{
                         public void run() {
                             show();
                         }
-                    }, 3000);
+                    }, 4000);
 
 
                 }
@@ -329,8 +363,8 @@ public class FolderActivity extends AppCompatActivity{
         }
 
         else if (id == R.id.Add_Folder) {
-            Toast.makeText(getApplicationContext(), "Add a folder!!", Toast.LENGTH_LONG).show();
-            //abcdef
+            Toast.makeText(getApplicationContext(), "Add a folder ", Toast.LENGTH_LONG).show();
+
             LayoutInflater li = LayoutInflater.from(context);
             View promptsView = li.inflate(R.layout.prompts, null);
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
@@ -388,8 +422,6 @@ public class FolderActivity extends AppCompatActivity{
         return super.onOptionsItemSelected(item);
     }
 
-
-
     public void getFolderData(String path1){
 
         final ListFiles listFiles = new ListFiles(new AsyncInterface() {
@@ -406,7 +438,6 @@ public class FolderActivity extends AppCompatActivity{
                 } finally {
                     arrayList = folderJSONs;
                     Log.v("size array", String.valueOf(arrayList.size()));
-//                    Log.v("t",String.valueOf(arrayList.get(0).getType()));
                     Log.v("g", String.valueOf(folderJSONs));
 
                     for(int i=0; i<arrayList.size();i++)
@@ -426,7 +457,6 @@ public class FolderActivity extends AppCompatActivity{
                     Log.d("folders", String.valueOf(noOfFolders));
                     Log.d("files,", String.valueOf(noOfFiles));
                 }
-//                show();
 
             }
 
@@ -468,9 +498,6 @@ public class FolderActivity extends AppCompatActivity{
     public int getsize(){
         return size;
     }
-
-
-
 
 
 

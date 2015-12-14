@@ -1,7 +1,10 @@
 package tushar_sk.spartandrive;
 
+import android.app.Activity;
 import android.app.ListActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
@@ -15,8 +18,10 @@ import java.util.List;
 import java.util.Stack;
 
 import Utility.ApplicationSettings;
+import Utility.AsyncInterface;
 import Utility.Constants;
 import Utility.FileArrayAdapter;
+import Utility.FolderJSON;
 import Utility.Option;
 import dropbox.actvity.UploadFile;
 
@@ -34,12 +39,11 @@ public class UploadActivity extends ListActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        currentDir = new File("/sdcard/");
+        currentDir = new File(String.valueOf(Environment.getExternalStorageDirectory()));
         fill(currentDir);
 
     }
 
-    //manpreet
     private void fill(File f)
     {
         File[]dirs = f.listFiles();
@@ -107,6 +111,10 @@ public class UploadActivity extends ListActivity{
         fill(currentDir);
     }
 
+    public Activity getActivty(){
+        return this;
+    }
+
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
@@ -129,9 +137,33 @@ public class UploadActivity extends ListActivity{
 
         Toast.makeText(this, "File Clicked: " + currentDir+"/"+o.getName(), Toast.LENGTH_SHORT).show();
         String FilePath = currentDir+"/"+o.getName();
-        new UploadFile().execute(Constants.fileUplaodUrl, Constants.accessToken, FilePath, o.getName(), ApplicationSettings.getSharedSettings().getPath());
+
         Log.v("path of the file", currentDir.toString());
-        Log.v("File clicked",o.getName());
+        Log.v("File clicked", o.getName());
+
+
+        UploadFile uploadFile = new UploadFile(new AsyncInterface() {
+            @Override
+            public void processFinish(ArrayList<FolderJSON> folderJSONs) {
+
+            }
+
+            @Override
+            public void processCreate(String sucess) {
+
+                Intent intent = new Intent(getActivty(),FolderActivity.class);
+                startActivity(intent);
+
+
+            }
+        });
+
+        uploadFile.execute(Constants.fileUplaodUrl, Constants.accessToken, FilePath, o.getName(), ApplicationSettings.getSharedSettings().getPath());
+
+
+
+
+
 
     }
 

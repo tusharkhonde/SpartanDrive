@@ -15,11 +15,17 @@
     <item android:id="@+id/Add_Folder"
         android:icon="@drawable/ic_action_add_folder"
         android:title="@string/ic_action_add_folder"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="never" />
 
     <!-- Refresh -->
     <item android:id="@+id/attach_file"
         android:icon="@drawable/ic_action_attach_file"
         android:title="@string/ic_action_attach_file"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="never" />
+
+    <item android:id="@+id/usagereport"
+        android:icon="@drawable/usage"
+        android:title="Usage Reports"
+        app:showAsAction="never" />
+
 </menu>

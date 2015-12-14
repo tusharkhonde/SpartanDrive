@@ -11,6 +11,8 @@ import java.io.File;
 import java.io.OutputStream;
 import java.net.URL;
 import javax.net.ssl.HttpsURLConnection;
+
+import Utility.AsyncInterface;
 import Utility.JsonHeader;
 
 /**
@@ -18,6 +20,11 @@ import Utility.JsonHeader;
  */
 public class UploadFile extends AsyncTask<String, Void, String> {
 
+    public AsyncInterface delegate = null;//Call back interface
+
+    public UploadFile(AsyncInterface asyncInterface) {
+        delegate = asyncInterface;//Assigning call back interface through constructor
+    }
 
     StringBuilder response = null;
     StringBuilder urlBuilder =  null;
@@ -68,6 +75,7 @@ public class UploadFile extends AsyncTask<String, Void, String> {
     protected void onPostExecute(String data) {
 
         Log.v("Response Code",data);
+        delegate.processCreate("Upload");
     }
 
 }

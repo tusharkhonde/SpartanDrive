@@ -104,11 +104,12 @@ public class SearchFile extends AsyncTask<String, Void, List<String>>{
         }
 
         else{
-            String response = data.get(0);
-            JSONTokener tokener = new JSONTokener(response);
-            JSONObject j;
 
             try {
+
+                String response = data.get(0);
+                JSONTokener tokener = new JSONTokener(response);
+                JSONObject j;
 
                 j = new JSONObject(tokener);
 
@@ -138,6 +139,7 @@ public class SearchFile extends AsyncTask<String, Void, List<String>>{
             }
             catch(JSONException e){
                 Log.v("Search List","List Empty");
+
             }
 
             ArrayList<FolderJSON> newUsers = new FolderJSON().fromJson(list);

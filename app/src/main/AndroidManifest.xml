@@ -11,12 +11,26 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
+    <!-- Keeps the processor from sleeping when a message is received. -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <!-- This app has permission to register and receive data message. -->
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+
+    <permission
+        android:name="tushar_sk.spartandrive.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="tushar_sk.spartandrive.permission.C2D_MESSAGE" />
+
+
+
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+     >
         <activity android:name=".LoginActivity"
             android:label="@string/app_name" >
             <intent-filter>
@@ -25,18 +39,37 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
         <activity
             android:name=".FolderActivity"
-            android:label="FolderActivity">
+            android:label="Spartan Drive">
            <meta-data
             android:name="android.app.default_searchable"
             android:resource="@xml/search" />
         </activity>
-        <activity android:name="dropbox.actvity.UsageReport"
-            />
         <activity
             android:name=".UploadActivity"
-            android:label="UploadActivity"/>
+            android:label="Local Files"/>
+
+        <activity android:name="dropbox.actvity.UsageReport"
+            android:label="Usage Report"
+            />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <receiver
+            android:name="tushar_sk.spartandrive.GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="tushar_sk.spartandrive" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name=".GcmIntentService" />
 
     </application>
 

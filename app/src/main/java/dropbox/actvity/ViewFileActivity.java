@@ -16,11 +16,11 @@ import Utility.AsyncInterface;
 
 
 /**
- * Created by nikhilakambham on 12/12/15.
+ * Created by TUSHAR_SK on 12/12/15.
  */
 public class ViewFileActivity extends AsyncTask<String, Void, List<String>> {
 
-    public String TAG= "ViewActivivty";
+    public String TAG= "View Activity";
     public AsyncInterface delegate = null;//Call back interface
 
     public ViewFileActivity(AsyncInterface asyncInterface) {
@@ -38,13 +38,9 @@ public class ViewFileActivity extends AsyncTask<String, Void, List<String>> {
         String file_name = params[2];
         String nm = params[3];
 
-        Log.i(TAG,"url:"+url+"\taccesstoken"+accessToken+"\tfilename:"+file_name+"\tnm:"+nm);
-        String[] arr_ = file_name.split("/");
         FileOutputStream fos = null;
         String ext="";
-       /* Log.i(TAG,arr_.length+Environment.getExternalStorageDirectory().getAbsolutePath() +" \"/Download\", \"/tmp.pdf\"");
-        Log.i(TAG,arr_[arr_.length-1] +"name:"+nm);*/
-        if(nm.contains(".pdf")){
+       if(nm.contains(".pdf")){
             file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Download", "/tmp.pdf");
             ext = ".pdf";
         }
@@ -91,7 +87,6 @@ public class ViewFileActivity extends AsyncTask<String, Void, List<String>> {
                 fos.write(baf.toByteArray());
                 fos.close();
                 bis.close();
-
             }
         }catch (Exception e) {
             e.printStackTrace();

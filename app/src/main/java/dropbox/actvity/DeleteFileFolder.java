@@ -16,10 +16,15 @@ import Utility.AsyncInterface;
 import Utility.JsonHeader;
 
 /**
- * Created by TUSHAR_SK on 12/1/15.
+ * Created by TUSHAR_SK on 12/13/15.
  */
-public class CreateFile extends AsyncTask<String, Void, List<String>> {
+public class DeleteFileFolder extends AsyncTask<String, Void, List<String>>{
 
+    public AsyncInterface delegate = null;//Call back interface
+
+    public DeleteFileFolder(AsyncInterface asyncInterface) {
+        delegate = asyncInterface;//Assigning call back interface through constructor
+    }
 
     StringBuilder response = null;
     StringBuilder urlBuilder = null;
@@ -28,18 +33,13 @@ public class CreateFile extends AsyncTask<String, Void, List<String>> {
     int responseCode = -1;
     DataOutputStream wr = null;
 
-    public AsyncInterface delegate = null;//Call back interface
-
-    public CreateFile(AsyncInterface asyncInterface) {
-        delegate = asyncInterface;//Assigning call back interface through constructor
-    }
-
-    public List<String> doInBackground(String... params) {
+    @Override
+    protected List<String> doInBackground(String... params) {
 
         String url = params[0];
         String accessToken = params[1];
-        String query = params[2];
-        String reqBody = new JsonHeader().getCreateFolderHeader(query);
+        String sourceFilePath = params[2];
+        String reqBody = new JsonHeader().getCreateFolderHeader(sourceFilePath);
         List<String> list = new ArrayList<String>();
 
         try {
@@ -83,19 +83,21 @@ public class CreateFile extends AsyncTask<String, Void, List<String>> {
     @Override
     protected void onPostExecute(List<String> data) {
 
-        Log.v("Create Response", data.get(1));
-
+        Log.v("Delete Response", data.get(1));
         try {
-
             String response = data.get(0);
             JSONTokener tokener = new JSONTokener(response);
             JSONObject j;
 
             j = new JSONObject(tokener);
 
-            System.out.println(j.get("path_lower"));
-            String path = j.get("path_lower").toString();
-            delegate.processCreate(path);
+            System.out.println(j.get(".tag"));
+            String tag = j.get(".tag").toString();
+
+            System.out.println(j.get("name"));
+            String name = j.get("name").toString();
+
+            delegate.processCreate("Sucess");
 
 
         } catch (JSONException e) {

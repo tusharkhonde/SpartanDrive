@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">SpartanDrive</string>
-    <string name="title_activity_home">HomeActivity</string>
+    <string name="app_name">Spartan Drive</string>
+    <string name="title_activity_home">Home</string>
     <string-array name="titles_array">
         <item>List non-text files</item>
         <item>List files shared with me</item>
@@ -8,6 +8,13 @@
         <item>List files contains \"a\" in title</item>
         <item>List starred text files</item>
         <item>List text or html files</item>
+    </string-array>
+
+    <string-array name="myOptions">
+        <item>Download File</item>
+        <item>Share File</item>
+        <item>Unshare File</item>
+        <item>Delete File</item>
     </string-array>
 
     <string name="action_settings">Settings</string>
@@ -20,5 +27,32 @@
     <string name="signed_out">signed_out</string>
     <string name="sign_out">sign_out</string>
     <string name="disconnect">disconnect</string>
+
+
+    <!-- Sign-in status messages -->
+
+    <string name="signing_in">Signing in…</string>
+
+    <string name="signed_in_err">"Error: please check logs."</string>
+    <string name="error_null_person">
+        Error: Plus.PeopleApi.getCurrentPerson returned null. Ensure that the Google+ API is
+        enabled for your project, you have a properly configured google-services.json file
+        and that your device has an internet connection.
+    </string>
+
+    <!-- Google Play Services error for Toast -->
+    <string name="play_services_error_fmt">Google Play Services Error: %i</string>
+
+    <!-- Button labels -->
+
+
+    <!-- Content Description for images -->
+    <string name="desc_google_icon">Google Logo</string>
+
+    <!-- Rationale for asking for Contacts -->
+    <string name="contacts_permission_rationale">Contacts access is needed in order to retrieve your email address.</string>
+    <string name="title_activity_main2">Main2Activity</string>
+
+    <string name="section_format">Hello World from section: %1$d</string>
 
 </resources>

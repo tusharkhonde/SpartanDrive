@@ -7,9 +7,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,15 +26,32 @@ import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Scope;
-import com.google.android.gms.drive.Drive;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.plus.Plus;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
 import Utility.AccessTokenUtil;
 import Utility.ApplicationSettings;
+import Utility.AsyncInterface;
+import Utility.Constants;
+import Utility.FolderJSON;
+import dropbox.actvity.GcmUserUpdate;
 
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         View.OnClickListener, AccessTokenUtil.GoogleConnectionUtilProtocol{
+
+    /**
+     *
+     */
+    public static final String SENDER_ID = "731017880939";
+    private GoogleCloudMessaging gcm;
+    Context context;
+    private String regid;
+
 
     private static final String TAG = "LoginActivity";
 
@@ -65,6 +84,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        if( getIntent().getBooleanExtra("Exit me", false)){
+            finish();
+            return; // add this to prevent from doing unnecessary stuffs
+        }
+
         // Restore from saved instance state
         // [START restore_saved_instance_state]
         if (savedInstanceState != null) {
@@ -85,9 +109,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApi(Plus.API)
-                .addApi(Drive.API)
-                .addScope(Drive.SCOPE_FILE)
-                .addScope(Drive.SCOPE_APPFOLDER)
                 .addScope(Plus.SCOPE_PLUS_LOGIN)
                 .addScope(new Scope(Scopes.PROFILE))
                 .addScope(new Scope(Scopes.EMAIL))
@@ -118,7 +139,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     public void onConnected(Bundle bundle) {
         mShouldResolve = false;
         mGoogleApiClient.connect();
-        Log.v("Connected","Connected to Google");
+        Log.v("Connected", "Connected to Google");
     }
 
 
@@ -167,11 +188,16 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         mShouldResolve = true;
 //        mGoogleApiClient.connect();
 
-//        // Change Activity
 //        Intent intent = new Intent(LoginActivity.this, FolderActivity.class);
 //        startActivity(intent);
 
-        pickUserAccount();
+       try {
+           pickUserAccount();
+       }
+       catch (Exception e){
+           mGoogleApiClient.connect();
+       }
+
 
 
     }
@@ -212,9 +238,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             if (resultCode == RESULT_OK) {
 
                 String mEmail = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
-                Log.v("email Result ok:",mEmail);
+                Log.v("Email Result_ok",mEmail);
                 ApplicationSettings.getSharedSettings().setEmail(mEmail);
-                Log.v("email get", ApplicationSettings.getSharedSettings().getEmail());
+                Log.v("Email Result_ok", ApplicationSettings.getSharedSettings().getEmail());
                 getUsername(mEmail);
             } else if (resultCode == RESULT_CANCELED) {
 
@@ -224,7 +250,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 && resultCode == RESULT_OK) {
 
             String mEmail = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
-            Log.v("email Result ok &&:",mEmail);
+            Log.v("Email Result_Ok Error",mEmail);
             ApplicationSettings.getSharedSettings().setEmail(mEmail);
             getUsername(mEmail);
         }
@@ -237,13 +263,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
             String mEmail = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
             ApplicationSettings.getSharedSettings().setEmail(mEmail);
-            Log.v("email Rc sign in:",mEmail);
+            Log.v("Email RC_Sign_IN:",mEmail);
             getUsername(mEmail);
 
             mIsResolving = false;
 //            mGoogleApiClient.connect();
         }
-
     }
 
     @Override
@@ -258,8 +283,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             }
         }
     }
-
-
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -317,10 +340,14 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     public void didGenerateAccessToken(String accessToken) {
         ApplicationSettings.getSharedSettings().setAccessToken(accessToken);
         ApplicationSettings.getSharedSettings().setGoogleApiClient(mGoogleApiClient);
-         Log.v("dgat",ApplicationSettings.getSharedSettings().getEmail());
+
+        // Get Registration Id from User for GCM
+        gcm = GoogleCloudMessaging.getInstance(this);
+        registerInBackground();
         Intent intent = new Intent(this, FolderActivity.class);
         startActivity(intent);
     }
+
 
     @Override
     public void didCatchException(final Exception e) {
@@ -347,6 +374,65 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     public GoogleApiClient getmGoogleApiClient(){
         return mGoogleApiClient;
     }
+
+    private void registerInBackground() {
+
+        new AsyncTask<Void, Void, String>() {
+            @Override
+            protected String doInBackground(Void... params) {
+                String msg = "";
+                try {
+                    if (gcm == null) {
+                        gcm = GoogleCloudMessaging.getInstance(context);
+                    }
+                    regid = gcm.register(SENDER_ID);
+                    msg = "Device registered, registration ID=" + regid;
+                    Log.v("Inside Registration id",regid);
+
+                    ApplicationSettings.getSharedSettings().setRegistration_id(regid);
+                    // You should send the registration ID to your server over HTTP, so it
+                    // can use GCM/HTTP or CCS to send messages to your app.
+                    sendRegistrationIdToBackend(regid);
+
+                } catch (IOException ex) {
+                    msg = "Error :" + ex.getMessage();
+                }
+                return msg;
+            }
+
+            @Override
+            protected void onPostExecute(String msg) {
+                Log.v("GCM TextView",msg);
+            }
+        }.execute(null, null, null);
+    }
+
+    private SharedPreferences getGcmPreferences(Context context) {
+        // This sample app persists the registration ID in shared preferences, but
+        // how you store the regID in your app is up to you.
+        return getSharedPreferences(LoginActivity.class.getSimpleName(),
+                Context.MODE_PRIVATE);
+    }
+
+    private void sendRegistrationIdToBackend(String regid) {
+
+        GcmUserUpdate gcmUserUpdate = new GcmUserUpdate(
+                new AsyncInterface() {
+                    @Override
+                    public void processFinish(ArrayList<FolderJSON> folderJSONs) {
+
+                    }
+
+                    @Override
+                    public void processCreate(String success) {
+                        Log.v("Msg","User "+success);
+                    }
+                });
+        gcmUserUpdate.execute(Constants.gcmUserInsertUpdate, ApplicationSettings.getSharedSettings().getEmail(), regid);
+
+
+    }
+
 
 
 }

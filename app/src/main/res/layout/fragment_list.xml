@@ -3,13 +3,19 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:id="@+id/folder_image"
+        android:layout_width="50dip"
+        android:layout_height="50dip" >
+    </ImageView>
 
     <TextView android:id="@+id/folder_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:textSize="13sp"
-        android:textColor="#AF002A"
+        android:textSize="15dp"
+        android:layout_toRightOf="@+id/folder_image"
+        android:textColor="#000000"
         android:textStyle="bold" />
 
 
@@ -17,17 +23,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="18dp"
-        android:textColor="#AF002A"
-        android:textSize="12sp"
-        android:textStyle="bold"/>
+        android:textColor="#0000FF"
+        android:layout_toRightOf="@+id/folder_image"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        />
 
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/checkbox_folder"
-        style="?android:attr/starStyle"
-        android:focusable="false"
-        android:textColor="#0048BA"
-        android:visibility="visible"/>
 
 </LinearLayout>

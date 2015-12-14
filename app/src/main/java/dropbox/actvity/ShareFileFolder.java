@@ -2,10 +2,12 @@ package dropbox.actvity;
 
 import android.os.AsyncTask;
 import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
@@ -14,24 +16,23 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.net.ssl.HttpsURLConnection;
+
 import Utility.ApplicationSettings;
 import Utility.AsyncInterface;
-import Utility.Constants;
 import Utility.FolderJSON;
 import Utility.JsonHeader;
-import tushar_sk.spartandrive.FolderActivity;
-
 
 /**
- * Created by TUSHAR_SK on 12/1/15.
+ * Created by TUSHAR_SK on 12/3/15.
  */
-public class ListFiles extends AsyncTask<String, Void, List<String>> {
+public class ShareFileFolder extends AsyncTask<String, Void, List<String>> {
 
 
     public AsyncInterface delegate = null;//Call back interface
 
-    public ListFiles(AsyncInterface asyncInterface) {
+    public ShareFileFolder(AsyncInterface asyncInterface) {
         delegate = asyncInterface;//Assigning call back interface through constructor
     }
 
@@ -42,19 +43,18 @@ public class ListFiles extends AsyncTask<String, Void, List<String>> {
     HttpsURLConnection con = null;
     int responseCode = -1;
     DataOutputStream wr = null;
-    FolderActivity f = new FolderActivity();
-    int size = f.getsize();
-
-    public List<Map<String,String>> list = new ArrayList<>();
+    public List<Map<String, String>> list = new ArrayList<>();
 
 
     public List<String> doInBackground(String... params) {
 
         String url = params[0];
         String accessToken = params[1];
-        String query = params[2];
-        String reqBody = new JsonHeader().getListHeader(query);
-        List<String> list = new ArrayList<String>();
+        String from = params[2];
+        String to = params[3];
+        String reqBody = new JsonHeader().shareFileFolder(from, to);
+        System.out.println(reqBody);
+        List<String> list = new ArrayList<>();
 
         try {
             response = new StringBuilder();
@@ -101,49 +101,13 @@ public class ListFiles extends AsyncTask<String, Void, List<String>> {
 
         Log.v("List Response", data.get(1));
 
-        if(Integer.valueOf(data.get(1)) == -1){
-//            new CreateFile().execute(Constants.createFoldersUrl, Constants.accessToken, "/"+ApplicationSettings.getSharedSettings().getEmail());
-              ApplicationSettings.getSharedSettings().setNoFolder("TRUE");
-              delegate.processCreate("Create");
+        if (Integer.valueOf(data.get(1)) == -1) {
 
-        }
+            delegate.processCreate("Error Copying");
 
-        else{
-        String response = data.get(0);
-        JSONTokener tokener = new JSONTokener(response);
-        JSONObject j;
+        } else {
 
-        try {
-
-            j = new JSONObject(tokener);
-
-            JSONArray j1 = (JSONArray) j.get("entries");
-            for (int i = 0; i < j1.length(); i++) {
-                Map<String, String> map = new HashMap<>();
-                JSONObject j2 = j1.getJSONObject(i);
-
-                map.put("name", j2.get("name").toString());
-                map.put("path_lower", j2.get("path_lower").toString());
-                Log.v("file", j2.get("name").toString());
-                System.out.println(j2.get("name"));
-                System.out.println(j2.get("path_lower"));
-                map.put("tag", j2.get(".tag").toString());
-                System.out.println(j2.get(".tag"));
-                if (!j2.get(".tag").equals("folder")) {
-                    map.put("size", j2.get("size").toString());
-                    map.put("date", j2.get("client_modified").toString());
-                    System.out.println(j2.get("size"));
-                    System.out.println(j2.get("client_modified"));
-                }
-                list.add(i, map);
-            }
-        }
-            catch(JSONException e){
-                Log.v("MSG","list empty");
-            }
-
-            ArrayList<FolderJSON> newUsers = new FolderJSON().fromJson(list);
-            delegate.processFinish(newUsers);
+            delegate.processCreate("Share Sucessfull");
 
         }
 
