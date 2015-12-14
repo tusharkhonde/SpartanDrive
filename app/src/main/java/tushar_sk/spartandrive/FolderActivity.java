@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,6 +39,11 @@ public class FolderActivity extends AppCompatActivity{
     public static String path;
     final Context context = this;
     private EditText result;
+    public static int noOfFiles = 0;
+    public static int noOfFolders = 0;
+    public static double usage = 0.0;
+    public static int size = 0;
+    public String TAG = "FolderActivity";
 
 
     @Override
@@ -250,6 +256,78 @@ public class FolderActivity extends AppCompatActivity{
             return true;
         }
 
+
+        else if (id == R.id.usagereport){
+
+            noOfFiles =0;
+            noOfFolders = 0;
+
+            final ListFiles listFiles = new ListFiles(new AsyncInterface() {
+
+
+                @Override
+                public void processFinish(ArrayList<FolderJSON> folderJSONs) {
+
+
+                    try {
+                        Log.v(TAG, String.valueOf(arrayList.size()));
+                    } catch (Exception e) {
+                        Log.v(TAG, "size 0");
+                    } finally {
+                        arrayList = folderJSONs;
+                        Log.v("size array", String.valueOf(arrayList.size()));
+                        Log.v("t",String.valueOf(arrayList.get(0).getType()));
+
+                        for(int i=0; i<arrayList.size();i++)
+                        {
+                            if(arrayList.get(i).getType().equals("folder")){
+                                noOfFolders = noOfFolders + 1;
+                                Log.d("path", arrayList.get(i).getPath());
+
+                                getFolderData(arrayList.get(i).getPath());
+
+
+                            }
+                            else if(arrayList.get(i).getType().contains("file")) {
+                                noOfFiles = noOfFiles + 1;
+
+
+                            }
+                        }
+                        Log.d("folders", String.valueOf(noOfFolders));
+                        Log.d("files,", String.valueOf(noOfFiles));
+
+
+                    }
+// handler to delay...
+
+                    new Handler().postDelayed(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            show();
+                        }
+                    }, 3000);
+
+
+                }
+
+                @Override
+                public void processCreate(String sucess) {
+
+
+                }
+
+            });
+            path = "/"+ApplicationSettings.getSharedSettings().getEmail();
+            listFiles.execute(Constants.listFilesFoldersurl, Constants.accessToken, path);
+
+
+
+            return true;
+
+        }
+
         else if (id == R.id.Add_Folder) {
             Toast.makeText(getApplicationContext(), "Add a folder!!", Toast.LENGTH_LONG).show();
             //abcdef
@@ -309,6 +387,90 @@ public class FolderActivity extends AppCompatActivity{
 
         return super.onOptionsItemSelected(item);
     }
+
+
+
+    public void getFolderData(String path1){
+
+        final ListFiles listFiles = new ListFiles(new AsyncInterface() {
+
+
+            @Override
+            public void processFinish(ArrayList<FolderJSON> folderJSONs) {
+
+
+                try {
+                    Log.v(TAG, String.valueOf(arrayList.size()));
+                } catch (Exception e) {
+                    Log.v(TAG, "size 0");
+                } finally {
+                    arrayList = folderJSONs;
+                    Log.v("size array", String.valueOf(arrayList.size()));
+//                    Log.v("t",String.valueOf(arrayList.get(0).getType()));
+                    Log.v("g", String.valueOf(folderJSONs));
+
+                    for(int i=0; i<arrayList.size();i++)
+                    {
+                        if(arrayList.get(i).getType().equals("folder")){
+                            noOfFolders = noOfFolders + 1;
+                            Log.d("path", arrayList.get(i).getPath());
+                            getFolderData(arrayList.get(i).getPath());
+
+
+                        }
+                        else if(arrayList.get(i).getType().contains("file"))
+                            noOfFiles = noOfFiles + 1;
+
+
+                    }
+                    Log.d("folders", String.valueOf(noOfFolders));
+                    Log.d("files,", String.valueOf(noOfFiles));
+                }
+//                show();
+
+            }
+
+
+            @Override
+            public void processCreate(String sucess) {
+                Log.d("","");
+
+            }
+        });
+
+
+        listFiles.execute(Constants.listFilesFoldersurl, Constants.accessToken,path1);
+
+
+
+    }
+
+    public void show(){
+
+        Intent intent = new Intent(getAct(),UsageReport.class);
+        startActivity(intent);
+
+    }
+
+
+
+    public int getFolder(){
+        return noOfFolders;
+    }
+
+    public int getNoOfFiles(){
+        return noOfFiles;
+    }
+
+    public void setSize(int s){
+        size =s;
+    }
+    public int getsize(){
+        return size;
+    }
+
+
+
 
 
 

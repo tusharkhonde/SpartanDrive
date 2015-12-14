@@ -32,6 +32,8 @@
             android:name="android.app.default_searchable"
             android:resource="@xml/search" />
         </activity>
+        <activity android:name="dropbox.actvity.UsageReport"
+            />
         <activity
             android:name=".UploadActivity"
             android:label="UploadActivity"/>
