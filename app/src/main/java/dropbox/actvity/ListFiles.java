@@ -127,7 +127,7 @@ public class ListFiles extends AsyncTask<String, Void, List<String>> {
                 Log.v("file", j2.get("name").toString());
                 System.out.println(j2.get("name"));
                 System.out.println(j2.get("path_lower"));
-                System.out.println("");
+                System.out.println("  ");
                 map.put("tag", j2.get(".tag").toString());
                 System.out.println(j2.get(".tag"));
                 if (!j2.get(".tag").equals("folder")) {
